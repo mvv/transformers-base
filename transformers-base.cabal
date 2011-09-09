@@ -1,5 +1,5 @@
 Name: transformers-base
-Version: 0.1
+Version: 0.2
 Category: Control
 Stability: experimental
 Synopsis: Lift computations from the bottom of a transformer stack
@@ -25,10 +25,12 @@ Source-Repository head
 
 Library
   Build-Depends:
-    base         >= 4.4 && < 5,
-    transformers >= 0.2
+    base          >= 4.4 && < 5,
+    transformers  >= 0.2,
+    monad-control >= 0.2.0.2
   Hs-Source-Dirs: src
   GHC-Options: -Wall
   Exposed-Modules:
     Control.Monad.Base
+    Control.Monad.Base.Control
 
