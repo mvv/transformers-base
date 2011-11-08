@@ -28,7 +28,7 @@ import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 
 class (Applicative μ, Monad μ,
-       Applicative η, Monad η) ⇒ MonadBase μ η | μ → η where
+       Applicative η, Monad η) ⇒ MonadBase η μ | μ → η where
   -- | Lift a computation from the base monad
   liftBase ∷ η α → μ α
 
@@ -40,28 +40,28 @@ instance MonadBase [] []                 where liftBase = id
 instance MonadBase (L.ST s) (L.ST s)     where liftBase = id
 instance MonadBase (S.ST s) (S.ST s)     where liftBase = id
 
-instance MonadBase μ η ⇒ MonadBase (IdentityT μ) η where
+instance MonadBase η μ ⇒ MonadBase η (IdentityT μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (MaybeT μ) η where
+instance MonadBase η μ ⇒ MonadBase η (MaybeT μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (ListT μ) η where
+instance MonadBase η μ ⇒ MonadBase η (ListT μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (ReaderT r μ) η where
+instance MonadBase η μ ⇒ MonadBase η (ReaderT r μ) where
   liftBase = lift . liftBase
-instance (Monoid w, MonadBase μ η) ⇒ MonadBase (L.WriterT w μ) η where
+instance (Monoid w, MonadBase η μ) ⇒ MonadBase η (L.WriterT w μ) where
   liftBase = lift . liftBase
-instance (Monoid w, MonadBase μ η) ⇒ MonadBase (S.WriterT w μ) η where
+instance (Monoid w, MonadBase η μ) ⇒ MonadBase η (S.WriterT w μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (L.StateT s μ) η where
+instance MonadBase η μ ⇒ MonadBase η (L.StateT s μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (S.StateT s μ) η where
+instance MonadBase η μ ⇒ MonadBase η (S.StateT s μ) where
   liftBase = lift . liftBase
-instance (Monoid w, MonadBase μ η) ⇒ MonadBase (L.RWST r w s μ) η where
+instance (Monoid w, MonadBase η μ) ⇒ MonadBase η (L.RWST r w s μ) where
   liftBase = lift . liftBase
-instance (Monoid w, MonadBase μ η) ⇒ MonadBase (S.RWST r w s μ) η where
+instance (Monoid w, MonadBase η μ) ⇒ MonadBase η (S.RWST r w s μ) where
   liftBase = lift . liftBase
-instance (Error e, MonadBase μ η) ⇒ MonadBase (ErrorT e μ) η where
+instance (Error e, MonadBase η μ) ⇒ MonadBase η (ErrorT e μ) where
   liftBase = lift . liftBase
-instance MonadBase μ η ⇒ MonadBase (ContT r μ) η where
+instance MonadBase η μ ⇒ MonadBase η (ContT r μ) where
   liftBase = lift . liftBase
 
