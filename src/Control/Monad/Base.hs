@@ -33,18 +33,18 @@ class (Applicative b, Applicative m, Monad b, Monad m) ⇒ MonadBase b m | m →
   -- | Lift a computation from the base monad
   liftBase ∷ b α → m α
 
-#define BASE(CTX, M) \
-instance (CTX) ⇒ MonadBase (M) (M) where liftBase = id
+#define BASE(M) \
+instance MonadBase (M) (M) where liftBase = id
 
-BASE(, IO)
-BASE(, L.ST s)
-BASE(, S.ST s)
-BASE(, STM)
-BASE(, Maybe)
-BASE(, Either e)
-BASE(, [])
-BASE(, (→) r)
-BASE(, Identity)
+BASE(IO)
+BASE(L.ST s)
+BASE(S.ST s)
+BASE(STM)
+BASE(Maybe)
+BASE(Either e)
+BASE([])
+BASE((→) r)
+BASE(Identity)
 #undef BASE
 
 -- | Can be used as a default implementation for 'liftBase'.
