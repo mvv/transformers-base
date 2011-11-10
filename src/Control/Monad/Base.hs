@@ -31,7 +31,7 @@ import Text.ParserCombinators.ReadP    ( ReadP )
 import Text.ParserCombinators.ReadPrec ( ReadPrec )
 import Control.Arrow                   ( ArrowApply, ArrowMonad )
 
-class (Monad m, Monad b) ⇒ MonadBase m b | m → b where
+class (Monad b, Monad m) ⇒ MonadBase b m | m → b where
   -- | Lift a computation from the base monad
   liftBase ∷ b α → m α
 
@@ -55,11 +55,11 @@ BASE(, Identity)
 -- | Can be used as a default implementation for 'liftBase'.
 --
 -- Note that: @liftBaseDefault = 'lift' . 'liftBase'@
-liftBaseDefault ∷ (MonadTrans t, MonadBase m b) ⇒ b α → t m α
+liftBaseDefault ∷ (MonadTrans t, MonadBase b m) ⇒ b α → t m α
 liftBaseDefault = lift . liftBase
 
 #define TRANS(T) \
-instance (MonadBase m b) ⇒ MonadBase (T m) b where liftBase = liftBaseDefault
+instance (MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
 
 TRANS(IdentityT)
 TRANS(MaybeT)
@@ -71,7 +71,7 @@ TRANS(ContT r)
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
-instance (CTX, MonadBase m b) ⇒ MonadBase (T m) b where liftBase = liftBaseDefault
+instance (CTX, MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
 
 TRANS_CTX(Monoid w, L.WriterT w)
 TRANS_CTX(Monoid w, S.WriterT w)
