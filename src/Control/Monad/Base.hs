@@ -11,6 +11,7 @@ module Control.Monad.Base (
 
 import Data.Monoid
 import Data.Functor.Identity
+import Control.Applicative ( Applicative )
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
 import Control.Monad.Trans.Class
@@ -27,11 +28,8 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 import GHC.Conc.Sync                   ( STM )
-import Text.ParserCombinators.ReadP    ( ReadP )
-import Text.ParserCombinators.ReadPrec ( ReadPrec )
-import Control.Arrow                   ( ArrowApply, ArrowMonad )
 
-class (Monad b, Monad m) ⇒ MonadBase b m | m → b where
+class (Applicative b, Applicative m, Monad b, Monad m) ⇒ MonadBase b m | m → b where
   -- | Lift a computation from the base monad
   liftBase ∷ b α → m α
 
@@ -45,10 +43,7 @@ BASE(, STM)
 BASE(, Maybe)
 BASE(, Either e)
 BASE(, [])
-BASE(, ReadP)
-BASE(, ReadPrec)
 BASE(, (→) r)
-BASE(ArrowApply a, ArrowMonad a)
 BASE(, Identity)
 #undef BASE
 
