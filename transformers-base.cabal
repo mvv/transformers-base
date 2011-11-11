@@ -10,9 +10,13 @@ Description:
 Homepage: https://github.com/mvv/transformers-base
 Bug-Reports: https://github.com/mvv/transformers-base/issues
 
-Author: Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>
+Author:
+  Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>,
+  Bas van Dijk <v.dijk.bas@gmail.com>
 Maintainer: Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>
-Copyright: 2011 Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>
+Copyright:
+  2011 Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>,
+       Bas van Dijk <v.dijk.bas@gmail.com>
 License: BSD3
 License-File: LICENSE
 
