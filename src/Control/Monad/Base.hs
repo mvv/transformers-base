@@ -13,8 +13,6 @@ module Control.Monad.Base (
 import Data.Monoid
 import Data.Functor.Identity
 import Control.Applicative (Applicative)
-import qualified Control.Monad.ST.Lazy as L
-import qualified Control.Monad.ST.Strict as S
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
@@ -28,7 +26,15 @@ import qualified Control.Monad.Trans.RWS.Lazy as L
 import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
+
+#if MIN_VERSION_base(4,4,0)
+import qualified Control.Monad.ST.Lazy as L
+import qualified Control.Monad.ST.Strict as S
+#endif
+
+#if MIN_VERSION_base(4,3,0)
 import GHC.Conc.Sync (STM)
+#endif
 
 class (Applicative b, Applicative m, Monad b, Monad m)
       ⇒ MonadBase b m | m → b where
@@ -39,14 +45,21 @@ class (Applicative b, Applicative m, Monad b, Monad m)
 instance MonadBase (M) (M) where liftBase = id
 
 BASE(IO)
-BASE(L.ST s)
-BASE(S.ST s)
-BASE(STM)
 BASE(Maybe)
 BASE(Either e)
 BASE([])
 BASE((→) r)
 BASE(Identity)
+
+#if MIN_VERSION_base(4,3,0)
+BASE(STM)
+#endif
+
+#if MIN_VERSION_base(4,4,0)
+BASE(L.ST s)
+BASE(S.ST s)
+#endif
+
 #undef BASE
 
 -- | Can be used as a default implementation for 'liftBase'.
