@@ -1,5 +1,5 @@
 Name: transformers-base
-Version: 0.4
+Version: 0.4.0.1
 Category: Control
 Stability: experimental
 Synopsis: Lift computations from the bottom of a transformer stack
