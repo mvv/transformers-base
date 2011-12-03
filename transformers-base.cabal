@@ -29,7 +29,7 @@ Source-Repository head
 
 Library
   Build-Depends:
-    base          >= 4.4 && < 5,
+    base          >= 3 && < 5,
     transformers  >= 0.2
   Hs-Source-Dirs: src
   GHC-Options: -Wall
