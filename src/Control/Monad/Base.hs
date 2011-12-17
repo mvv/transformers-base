@@ -12,7 +12,7 @@ module Control.Monad.Base (
 
 import Data.Monoid
 import Data.Functor.Identity
-import Control.Applicative (Applicative)
+import Control.Applicative (Applicative(..))
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
@@ -26,6 +26,10 @@ import qualified Control.Monad.Trans.RWS.Lazy as L
 import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
+
+#if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
+import Control.Monad (ap)
+#endif
 
 #if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
 import qualified Control.Monad.ST.Lazy as L
