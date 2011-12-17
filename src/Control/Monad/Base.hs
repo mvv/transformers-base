@@ -27,6 +27,11 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 
+#if HS_TRANSFORMERS_BASE__ORPHANS
+import Control.Applicative (pure, (<*>))
+import Control.Monad (ap)
+#endif
+
 #if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
