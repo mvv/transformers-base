@@ -27,7 +27,7 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 
-#if MIN_VERSION_base(4,4,0)
+#if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
 #endif
@@ -55,7 +55,17 @@ BASE(Identity)
 BASE(STM)
 #endif
 
-#if MIN_VERSION_base(4,4,0)
+#if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
+instance Applicative (L.ST s) where
+  pure  = return
+  (<*>) = ap
+
+instance Applicative (S.ST s) where
+  pure  = return
+  (<*>) = ap
+#endif
+
+#if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
 BASE(L.ST s)
 BASE(S.ST s)
 #endif
