@@ -24,6 +24,7 @@ import qualified Control.Monad.Trans.State.Lazy as L
 import qualified Control.Monad.Trans.State.Strict as S
 import qualified Control.Monad.Trans.RWS.Lazy as L
 import qualified Control.Monad.Trans.RWS.Strict as S
+import Control.Monad.Trans.Either
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 
@@ -92,6 +93,7 @@ TRANS(ReaderT r)
 TRANS(L.StateT s)
 TRANS(S.StateT s)
 TRANS(ContT r)
+TRANS(EitherT e)
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
