@@ -5,6 +5,10 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+#if MIN_VERSION_base(4,4,0)
+{-# LANGUAGE Safe #-}
+#endif
+
 #if MIN_VERSION_transformers(0,4,0)
 -- Hide warnings for the deprecated ErrorT transformer:
 {-# OPTIONS_GHC -fno-warn-warnings-deprecations #-}
@@ -38,16 +42,16 @@ import Control.Monad.Trans.Except
 
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
 import Control.Monad (ap)
-#endif
-
-#if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
 #endif
 
-#if MIN_VERSION_base(4,3,0)
-import GHC.Conc.Sync (STM)
+#if MIN_VERSION_base(4,4,0)
+import qualified Control.Monad.ST.Lazy.Safe as L
+import qualified Control.Monad.ST.Safe as S
 #endif
+
+import Control.Monad.STM (STM)
 
 class (Applicative b, Applicative m, Monad b, Monad m)
       ⇒ MonadBase b m | m → b where
@@ -64,9 +68,7 @@ BASE([])
 BASE((→) r)
 BASE(Identity)
 
-#if MIN_VERSION_base(4,3,0)
 BASE(STM)
-#endif
 
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
 instance Applicative (L.ST s) where
@@ -76,9 +78,12 @@ instance Applicative (L.ST s) where
 instance Applicative (S.ST s) where
   pure  = return
   (<*>) = ap
+
+BASE(L.ST s)
+BASE(S.ST s)
 #endif
 
-#if MIN_VERSION_base(4,4,0) || HS_TRANSFORMERS_BASE__ORPHANS
+#if MIN_VERSION_base(4,4,0)
 BASE(L.ST s)
 BASE(S.ST s)
 #endif
