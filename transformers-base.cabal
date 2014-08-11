@@ -34,9 +34,9 @@ Flag OrphanInstances
 
 Library
   Build-Depends:
-    base          >= 3 && < 5,
-    stm           >= 2.3,
-    transformers  >= 0.2
+    base         >= 3 && < 5,
+    stm          >= 2.3,
+    transformers >= 0.2
   Hs-Source-Dirs: src
   GHC-Options: -Wall
   if flag(OrphanInstances)

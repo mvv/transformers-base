@@ -14,9 +14,9 @@
 {-# OPTIONS_GHC -fno-warn-warnings-deprecations #-}
 #endif
 
-module Control.Monad.Base (
-    MonadBase(..),
-    liftBaseDefault
+module Control.Monad.Base
+  ( MonadBase(..)
+  , liftBaseDefault
   ) where
 
 import Data.Monoid
