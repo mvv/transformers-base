@@ -36,9 +36,7 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 
-#if MIN_VERSION_transformers(0,4,0)
 import Control.Monad.Trans.Except
-#endif
 
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
 import Control.Monad (ap)
@@ -106,9 +104,7 @@ TRANS(ReaderT r)
 TRANS(L.StateT s)
 TRANS(S.StateT s)
 TRANS(ContT r)
-#if MIN_VERSION_transformers(0,4,0)
 TRANS(ExceptT e)
-#endif
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
