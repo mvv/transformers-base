@@ -35,20 +35,16 @@ import qualified Control.Monad.Trans.RWS.Lazy as L
 import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
-
 import Control.Monad.Trans.Except
-
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
 import Control.Monad (ap)
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
 #endif
-
 #if MIN_VERSION_base(4,4,0)
 import qualified Control.Monad.ST.Lazy.Safe as L
 import qualified Control.Monad.ST.Safe as S
 #endif
-
 import Control.Monad.STM (STM)
 
 class (Applicative b, Applicative m, Monad b, Monad m)
