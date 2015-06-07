@@ -29,7 +29,7 @@ Source-Repository head
 
 Flag OrphanInstances
   Description:
-    Declare orphan Applicative instances for lazy and strict ST if needed
+    Import orphan Applicative instances for lazy and strict ST if needed
   Default: True
 
 Library
@@ -41,6 +41,8 @@ Library
   Hs-Source-Dirs: src
   GHC-Options: -Wall
   if flag(OrphanInstances)
+    Build-Depends:
+      base-orphans >= 0.3
     CPP-Options: -DHS_TRANSFORMERS_BASE__ORPHANS=1
   else
     CPP-Options: -DHS_TRANSFORMERS_BASE__ORPHANS=0
