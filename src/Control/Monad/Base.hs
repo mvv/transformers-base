@@ -19,9 +19,7 @@ module Control.Monad.Base
   , liftBaseDefault
   ) where
 
-import Data.Monoid
 import Data.Functor.Identity
-import Control.Applicative (Applicative(..))
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
@@ -36,6 +34,10 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 import Control.Monad.Trans.Except
+#if !MIN_VERSION_base(4,8,0)
+import Data.Monoid
+import Control.Applicative (Applicative(..))
+#endif
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
