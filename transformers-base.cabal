@@ -23,7 +23,7 @@ License-File: LICENSE
 Extra-Source-Files:
   README.md
 
-Tested-With: GHC==7.0.4, GHC==7.2.2, GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,
+Tested-With: GHC==7.0.4, GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,
              GHC==7.10.3, GHC==8.0.1
 
 Cabal-Version: >= 1.6.0
@@ -40,7 +40,7 @@ Flag OrphanInstances
 
 Library
   Build-Depends:
-    base                >= 3 && < 5,
+    base                >= 3 && < 5 && (< 4.4 || >= 4.5),
     stm                 >= 2.3,
     transformers        >= 0.2,
     transformers-compat >= 0.2
