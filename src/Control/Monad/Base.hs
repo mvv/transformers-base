@@ -24,9 +24,6 @@ import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.List
-#if MIN_VERSION_transformers(0,5,3) || MIN_VERSION_transformers_compat(0,5,3)
-import Control.Monad.Trans.Accum
-#endif
 import Control.Monad.Trans.Reader
 import qualified Control.Monad.Trans.Writer.Lazy as L
 import qualified Control.Monad.Trans.Writer.Strict as S
@@ -37,6 +34,10 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 import Control.Monad.Trans.Except
+#if MIN_VERSION_transformers(0,5,3) || MIN_VERSION_transformers_compat(0,6,0)
+import Control.Monad.Trans.Accum
+import Control.Monad.Trans.Select
+#endif
 #if !MIN_VERSION_base(4,8,0)
 import Data.Monoid
 import Control.Applicative (Applicative(..))
@@ -98,17 +99,20 @@ TRANS(L.StateT s)
 TRANS(S.StateT s)
 TRANS(ContT r)
 TRANS(ExceptT e)
+#if MIN_VERSION_transformers(0,5,3) || MIN_VERSION_transformers_compat(0,6,0)
+TRANS(SelectT r)
+#endif
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
 instance (CTX, MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
 
-#if MIN_VERSION_transformers(0,5,3) || MIN_VERSION_transformers_compat(0,5,3)
-TRANS_CTX(Monoid w, AccumT w)
-#endif
 TRANS_CTX(Monoid w, L.WriterT w)
 TRANS_CTX(Monoid w, S.WriterT w)
 TRANS_CTX(Monoid w, L.RWST r w s)
 TRANS_CTX(Monoid w, S.RWST r w s)
 TRANS_CTX(Error e,  ErrorT e)
+#if MIN_VERSION_transformers(0,5,3) || MIN_VERSION_transformers_compat(0,6,0)
+TRANS_CTX(Monoid w, AccumT w)
+#endif
 #undef TRANS_CTX
