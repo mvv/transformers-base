@@ -1,5 +1,6 @@
-cabal-dev
-cabal.sandbox.config
-dist
+/cabal-dev
+/cabal.sandbox.config
+/dist
+/dist-newstyle
 .*
 *~
