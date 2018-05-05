@@ -25,6 +25,7 @@ import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.List
 import Control.Monad.Trans.Reader
+import Control.Monad.Trans.Resource
 import qualified Control.Monad.Trans.Writer.Lazy as L
 import qualified Control.Monad.Trans.Writer.Strict as S
 import qualified Control.Monad.Trans.State.Lazy as L
@@ -98,6 +99,7 @@ TRANS(S.StateT s)
 TRANS(ContT r)
 TRANS(ExceptT e)
 TRANS(SelectT r)
+TRANS(ResourceT r)
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
