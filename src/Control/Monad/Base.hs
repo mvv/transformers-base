@@ -31,6 +31,10 @@ import qualified Control.Monad.Trans.State.Lazy as L
 import qualified Control.Monad.Trans.State.Strict as S
 import qualified Control.Monad.Trans.RWS.Lazy as L
 import qualified Control.Monad.Trans.RWS.Strict as S
+#if MIN_VERSION_transformers(0,5,6)
+import qualified Control.Monad.Trans.Writer.CPS as C
+import qualified Control.Monad.Trans.RWS.CPS as C
+#endif
 import Control.Monad.Trans.Error
 import Control.Monad.Trans.Cont
 import Control.Monad.Trans.Except
@@ -107,6 +111,10 @@ TRANS_CTX(Monoid w, L.WriterT w)
 TRANS_CTX(Monoid w, S.WriterT w)
 TRANS_CTX(Monoid w, L.RWST r w s)
 TRANS_CTX(Monoid w, S.RWST r w s)
+#if MIN_VERSION_transformers(0,5,6)
+TRANS_CTX(Monoid w, C.WriterT w)
+TRANS_CTX(Monoid w, C.RWST r w s)
+#endif
 TRANS_CTX(Error e,  ErrorT e)
 TRANS_CTX(Monoid w, AccumT w)
 #undef TRANS_CTX
