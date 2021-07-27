@@ -42,8 +42,8 @@ Library
   Build-Depends:
     base                >= 3 && < 5 && (< 4.4 || >= 4.5),
     stm                 >= 2.3,
-    transformers        >= 0.2,
-    transformers-compat >= 0.6.1
+    transformers        >= 0.2 && <0.7,
+    transformers-compat >= 0.6.1 && <0.8
   Hs-Source-Dirs: src
   GHC-Options: -Wall
   if flag(OrphanInstances)
