@@ -23,7 +23,6 @@ import Data.Functor.Identity
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
-import Control.Monad.Trans.List
 import Control.Monad.Trans.Reader
 import qualified Control.Monad.Trans.Writer.Lazy as L
 import qualified Control.Monad.Trans.Writer.Strict as S
@@ -35,7 +34,10 @@ import qualified Control.Monad.Trans.RWS.Strict as S
 import qualified Control.Monad.Trans.Writer.CPS as C
 import qualified Control.Monad.Trans.RWS.CPS as C
 #endif
+#if !MIN_VERSION_transformers(0,6,0)
+import Control.Monad.Trans.List
 import Control.Monad.Trans.Error
+#endif
 import Control.Monad.Trans.Cont
 import Control.Monad.Trans.Except
 import Control.Monad.Trans.Accum
@@ -95,13 +97,15 @@ instance (MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
 
 TRANS(IdentityT)
 TRANS(MaybeT)
-TRANS(ListT)
 TRANS(ReaderT r)
 TRANS(L.StateT s)
 TRANS(S.StateT s)
 TRANS(ContT r)
 TRANS(ExceptT e)
 TRANS(SelectT r)
+#if !MIN_VERSION_transformers(0,6,0)
+TRANS(ListT)
+#endif
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
@@ -115,6 +119,8 @@ TRANS_CTX(Monoid w, S.RWST r w s)
 TRANS_CTX(Monoid w, C.WriterT w)
 TRANS_CTX(Monoid w, C.RWST r w s)
 #endif
+#if !MIN_VERSION_transformers(0,6,0)
 TRANS_CTX(Error e,  ErrorT e)
+#endif
 TRANS_CTX(Monoid w, AccumT w)
 #undef TRANS_CTX
