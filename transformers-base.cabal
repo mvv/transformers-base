@@ -24,7 +24,8 @@ Extra-Source-Files:
   README.md
 
 Tested-With: GHC==7.0.4, GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,
-             GHC==7.10.3, GHC==8.0.2, GHC==8.2.2, GHC==8.4.4, GHC==8.6.1
+             GHC==7.10.3, GHC==8.0.2, GHC==8.2.2, GHC==8.4.4, GHC==8.6.5,
+             GHC==8.8.4, GHC==8.10.5, GHC==9.0.1
 
 Cabal-Version: >= 1.8
 Build-Type: Simple
@@ -42,8 +43,8 @@ Library
   Build-Depends:
     base                >= 3 && < 5 && (< 4.4 || >= 4.5),
     stm                 >= 2.3,
-    transformers        >= 0.2 && <0.7,
-    transformers-compat >= 0.6.1 && <0.8
+    transformers        >= 0.2,
+    transformers-compat >= 0.6.1
   Hs-Source-Dirs: src
   GHC-Options: -Wall
   if flag(OrphanInstances)
