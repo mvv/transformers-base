@@ -1,9 +1,11 @@
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE UnicodeSyntax #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE DefaultSignatures #-}
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 #if MIN_VERSION_base(4,4,0)
 {-# LANGUAGE Safe #-}
@@ -61,6 +63,8 @@ class (Applicative b, Applicative m, Monad b, Monad m)
       ⇒ MonadBase b m | m → b where
   -- | Lift a computation from the base monad
   liftBase ∷ b α → m α
+  default liftBase :: (m ~ t m', MonadTrans t, MonadBase b m') => b α → m α
+  liftBase = liftBaseDefault
 
 #define BASE(M) \
 instance MonadBase (M) (M) where liftBase = id
@@ -93,7 +97,7 @@ liftBaseDefault ∷ (MonadTrans t, MonadBase b m) ⇒ b α → t m α
 liftBaseDefault = lift . liftBase
 
 #define TRANS(T) \
-instance (MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
+instance (MonadBase b m) ⇒ MonadBase b (T m)
 
 TRANS(IdentityT)
 TRANS(MaybeT)
@@ -109,7 +113,7 @@ TRANS(ListT)
 #undef TRANS
 
 #define TRANS_CTX(CTX, T) \
-instance (CTX, MonadBase b m) ⇒ MonadBase b (T m) where liftBase = liftBaseDefault
+instance (CTX, MonadBase b m) ⇒ MonadBase b (T m)
 
 TRANS_CTX(Monoid w, L.WriterT w)
 TRANS_CTX(Monoid w, S.WriterT w)
