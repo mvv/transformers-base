@@ -47,14 +47,18 @@ import Data.Monoid
 import Control.Applicative (Applicative(..))
 #endif
 #if !MIN_VERSION_base(4,4,0) && HS_TRANSFORMERS_BASE__ORPHANS
-import Data.Orphans ()
-#endif
-#if MIN_VERSION_base(4,4,0) && !MIN_VERSION_base(4,8,0)
-import qualified Control.Monad.ST.Lazy.Safe as L
-import qualified Control.Monad.ST.Safe as S
-#else
 import qualified Control.Monad.ST.Lazy as L
 import qualified Control.Monad.ST.Strict as S
+import Data.Orphans ()
+#endif
+#if MIN_VERSION_base(4,4,0)
+# if MIN_VERSION_base(4,8,0)
+import qualified Control.Monad.ST.Lazy as L
+import qualified Control.Monad.ST.Strict as S
+# else
+import qualified Control.Monad.ST.Lazy.Safe as L
+import qualified Control.Monad.ST.Safe as S
+# endif
 #endif
 import Control.Monad.STM (STM)
 
